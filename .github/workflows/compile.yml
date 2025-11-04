@@ -21,3 +21,11 @@ jobs:
         run: |
           meson setup builddir --cross-file=cross/rv64imac.toml
           ninja -C builddir
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: s3k-elf
+          path: |
+            builddir/s3k.elf
