@@ -1,0 +1,23 @@
+name: RISC-V Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: hakarlsson/riscv-picolibc
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build inside the RISC-V container
+        run: |
+          meson setup builddir --cross-file=cross/rv64imac.toml
+          ninja -C builddir
